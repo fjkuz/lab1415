@@ -1,13 +1,41 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-  //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-  // to see how IntelliJ IDEA suggests fixing it.
-  IO.println(String.format("Hello and welcome!"));
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-  for (int i = 1; i <= 5; i++) {
-    //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-    // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-    IO.println("i = " + i);
+public class Main {
+  static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+    System.out.println("ВВведите строку, в которой нужно найти IP:");
+    String str = scan.nextLine();
+    Pattern pattern = Pattern.compile("\\b(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\b");
+    Matcher matcher = pattern.matcher(str);
+    if (matcher.find()) {
+      String ip = matcher.group();
+      System.out.println("IP найден: " + ip);
+      try {
+        File file = new File("C://lab", "lab15.txt");
+        if (file.createNewFile())
+          System.out.println("файл создан");
+        try(BufferedWriter bw=new BufferedWriter(new FileWriter("C://lab/lab15.txt"))){
+          bw.write(ip);
+        }
+        }
+      catch(IOException ex){System.out.println(ex.getMessage());}
+    } else
+      System.out.println("IP не найден");
   }
 }
+//Scanner scan=new Scanner(System.in);
+//    System.out.println("ВВведите строку, в которой нужно найти IP:");
+//    String str=scan.nextLine();
+//    Pattern pattern=Pattern.compile("\\b(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d|\\d\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\b");
+//    Matcher matcher=pattern.matcher(str);
+//    if(matcher.find())
+//      System.out.println("IP найден: "+matcher.group());
+//    else
+//      System.out.println("IP не найден");
